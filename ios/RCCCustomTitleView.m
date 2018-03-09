@@ -29,9 +29,10 @@
         
         if ([alignment isEqualToString:@"fill"]) {
             self.frame = frame;
-            self.subView.frame = self.frame;
+            subView.sizeFlexibility = RCTRootViewSizeFlexibilityNone;
         } else {
             self.subView.delegate = self;
+            subView.sizeFlexibility = RCTRootViewSizeFlexibilityWidthAndHeight;
         }
         
         [self addSubview:subView];
@@ -40,9 +41,20 @@
     return self;
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if ([self.alignment isEqualToString:@"fill"]) {
+        [self.subView setFrame:self.bounds];
+    }
+}
+
+- (NSString *)alignment {
+    return _alignment ? _alignment : @"center";
+}
+
 - (void)rootViewDidChangeIntrinsicSize:(RCTRootView *)rootView {
     if ([self.alignment isEqualToString:@"center"]) {
-        [self setFrame:CGRectMake(0, 0, rootView.intrinsicContentSize.width, rootView.intrinsicContentSize.height)];
+        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.subView.intrinsicContentSize.width, self.subView.intrinsicContentSize.height)];
         [self.subView setFrame:CGRectMake(0, 0, rootView.intrinsicContentSize.width, rootView.intrinsicContentSize.height)];
     }
 }
