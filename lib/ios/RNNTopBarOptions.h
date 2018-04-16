@@ -3,11 +3,12 @@
 #import "RNNSubtitleOptions.h"
 #import "RNNBackgroundOptions.h"
 #import "RNNComponentOptions.h"
-
+#import "RNNButtonOptions.h"
+#import "RNNButtonArrayOptions.h"
 @interface RNNTopBarOptions : RNNOptions
 
-@property (nonatomic, strong) NSArray* leftButtons;
-@property (nonatomic, strong) NSArray* rightButtons;
+@property (nonatomic, strong) RNNButtonArrayOptions* leftButtons;
+@property (nonatomic, strong) RNNButtonArrayOptions* rightButtons;
 @property (nonatomic, strong) NSNumber* visible;
 @property (nonatomic, strong) NSNumber* hideOnScroll;
 @property (nonatomic, strong) NSNumber* buttonColor;
@@ -22,6 +23,7 @@
 @property (nonatomic, strong) RNNTitleOptions* title;
 @property (nonatomic, strong) RNNSubtitleOptions* subtitle;
 @property (nonatomic, strong) RNNBackgroundOptions* background;
+@property (nonatomic, strong) RNNButtonOptions* button;
 @property (nonatomic, strong) NSNumber* backButtonImage;
 @property (nonatomic, strong) NSNumber* backButtonHidden;
 @property (nonatomic, strong) NSString* backButtonTitle;

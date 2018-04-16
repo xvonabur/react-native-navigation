@@ -71,4 +71,19 @@
 	free(props);
 }
 
+- (void)mergeWithObject:(id)object {
+	unsigned int count;
+	objc_property_t* props = class_copyPropertyList([self class], &count);
+	for (int i = 0; i < count; i++) {
+		objc_property_t property = props[i];
+		NSString *propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
+		id value = [object valueForKey:propertyName];
+		if (value && ![value isKindOfClass:[NSNull class]]) {
+			[self setValue:value forKey:propertyName];
+		}
+		
+	}
+	free(props);
+}
+
 @end

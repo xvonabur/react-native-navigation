@@ -370,7 +370,9 @@
 }
 
 -(void)testRightButtonsWithTitle_withoutStyle {
-	self.options.topBar.rightButtons = @[@{@"id": @"testId", @"title": @"test"}];
+	RNNButtonArrayOptions* rightButtons = [[RNNButtonArrayOptions alloc] init];
+	[rightButtons mergeWith:@[@{@"id": @"testId", @"title": @"test"}] defaultButtonOptions:nil];
+	self.options.topBar.rightButtons = rightButtons;
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -384,8 +386,9 @@
 
 -(void)testRightButtonsWithTitle_withStyle {
 	NSNumber* inputColor = @(0xFFFF0000);
-	
-	self.options.topBar.rightButtons = @[@{@"id": @"testId", @"title": @"test", @"enabled": @false, @"buttonColor": inputColor, @"buttonFontSize": @22, @"buttonFontWeight": @"800"}];
+	RNNButtonArrayOptions* rightButtons = [[RNNButtonArrayOptions alloc] init];
+	[rightButtons mergeWith:@[@{@"id": @"testId", @"title": @"test", @"enabled": @false, @"buttonColor": inputColor, @"buttonFontSize": @22, @"buttonFontWeight": @"800"}] defaultButtonOptions:nil];
+	self.options.topBar.rightButtons = rightButtons;
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -402,6 +405,9 @@
 
 -(void)testLeftButtonsWithTitle_withoutStyle {
 	self.options.topBar.leftButtons = @[@{@"id": @"testId", @"title": @"test"}];
+	RNNButtonArrayOptions* leftButtons = [[RNNButtonArrayOptions alloc] init];
+	[leftButtons mergeWith:@[@{@"id": @"testId", @"title": @"test"}] defaultButtonOptions:nil];
+	self.options.topBar.leftButtons = leftButtons;
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -416,7 +422,10 @@
 -(void)testLeftButtonsWithTitle_withStyle {
 	NSNumber* inputColor = @(0xFFFF0000);
 	
-	self.options.topBar.leftButtons = @[@{@"id": @"testId", @"title": @"test", @"enabled": @false, @"buttonColor": inputColor, @"buttonFontSize": @22, @"buttonFontWeight": @"800"}];
+	RNNButtonArrayOptions* leftButtons = [[RNNButtonArrayOptions alloc] init];
+	[leftButtons mergeWith:@[@{@"id": @"testId", @"title": @"test", @"enabled": @false, @"buttonColor": inputColor, @"buttonFontSize": @22, @"buttonFontWeight": @"800"}] defaultButtonOptions:nil];
+	
+	self.options.topBar.leftButtons = leftButtons;
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	

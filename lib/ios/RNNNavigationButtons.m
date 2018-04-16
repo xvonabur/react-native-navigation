@@ -33,7 +33,7 @@
 
 -(void)setButtons:(NSArray*)buttons side:(NSString*)side animated:(BOOL)animated {
 	NSMutableArray *barButtonItems = [NSMutableArray new];
-	for (NSDictionary *button in buttons) {
+	for (RNNButtonOptions *button in buttons) {
 		RNNUIBarButtonItem* barButtonItem = [self buildButton:button];
 		if(barButtonItem) {
 			[barButtonItems addObject:barButtonItem];
@@ -51,34 +51,24 @@
 	}
 }
 
--(RNNUIBarButtonItem*)buildButton: (NSDictionary*)dictionary {
-	NSString* buttonId = dictionary[@"id"];
-	NSString* title = dictionary[@"title"];
-	NSString* component = dictionary[@"component"][@"name"];
-	
-	if (!buttonId) {
-		@throw [NSException exceptionWithName:@"NSInvalidArgumentException" reason:[@"button id is not specified " stringByAppendingString:title] userInfo:nil];
+-(RNNUIBarButtonItem*)buildButton: (RNNButtonOptions*)buttonOptions {
+	if (!buttonOptions.buttonID) {
+		@throw [NSException exceptionWithName:@"NSInvalidArgumentException" reason:[@"button id is not specified " stringByAppendingString:buttonOptions.title] userInfo:nil];
 	}
 	
 	UIImage* iconImage = nil;
-	id icon = dictionary[@"icon"];
-	if (icon) {
-		iconImage = [RCTConvert UIImage:icon];
+	if (buttonOptions.icon) {
+		iconImage = [RCTConvert UIImage:buttonOptions.icon];
 	}
 	
 	RNNUIBarButtonItem *barButtonItem;
-	if (component) {
-		RCTRootView *view = (RCTRootView*)[self.viewController.creator createRootView:component rootViewId:buttonId];
-		barButtonItem = [[RNNUIBarButtonItem alloc] init:buttonId withCustomView:view];
+	if (buttonOptions.componentName) {
+		RCTRootView *view = (RCTRootView*)[self.viewController.creator createRootView:buttonOptions.componentName rootViewId:buttonOptions.buttonID];
+		barButtonItem = [[RNNUIBarButtonItem alloc] init:buttonOptions.buttonID withCustomView:view];
 	} else if (iconImage) {
-		barButtonItem = [[RNNUIBarButtonItem alloc] init:buttonId withIcon:iconImage];
-	} else if (title) {
-		barButtonItem = [[RNNUIBarButtonItem alloc] init:buttonId withTitle:title];
-		
-		NSMutableDictionary *buttonTextAttributes = [RCTHelpers textAttributesFromDictionary:dictionary withPrefix:@"button"];
-		if (buttonTextAttributes.allKeys.count > 0) {
-			[barButtonItem setTitleTextAttributes:buttonTextAttributes forState:UIControlStateNormal];
-		}
+		barButtonItem = [[RNNUIBarButtonItem alloc] init:buttonOptions.buttonID withIcon:iconImage];
+	} else if (buttonOptions.title) {
+		barButtonItem = [[RNNUIBarButtonItem alloc] init:buttonOptions.buttonID withTitle:buttonOptions.title];
 	} else {
 		return nil;
 	}
@@ -86,12 +76,10 @@
 	barButtonItem.target = self;
 	barButtonItem.action = @selector(onButtonPress:);
 	
-	NSNumber *enabled = dictionary[@"enabled"];
-	BOOL enabledBool = enabled ? [enabled boolValue] : YES;
+	BOOL enabledBool = buttonOptions.enabled ? [buttonOptions.enabled boolValue] : YES;
 	[barButtonItem setEnabled:enabledBool];
 	
-	NSNumber *disableIconTintString = dictionary[@"disableIconTint"];
-	BOOL disableIconTint = disableIconTintString ? [disableIconTintString boolValue] : NO;
+	BOOL disableIconTint = buttonOptions.disableIconTint ? [buttonOptions.disableIconTint boolValue] : NO;
 	if (disableIconTint) {
 		[barButtonItem setImage:[barButtonItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 	}
@@ -99,21 +87,18 @@
 	NSMutableDictionary* textAttributes = [[NSMutableDictionary alloc] init];
 	NSMutableDictionary* disabledTextAttributes = [[NSMutableDictionary alloc] init];
 	
-	id color = dictionary[@"color"];
-	if (color) {
-		[textAttributes setObject:[RCTConvert UIColor:color] forKey:NSForegroundColorAttributeName];
+	if (buttonOptions.color) {
+		[textAttributes setObject:[RCTConvert UIColor:buttonOptions.color] forKey:NSForegroundColorAttributeName];
 	}
 	
-	NSNumber* disabledColor = dictionary[@"disabledColor"];
-	if (disabledColor) {
-		UIColor *color = [RCTConvert UIColor:disabledColor];
+	if (buttonOptions.disabledColor) {
+		UIColor *color = [RCTConvert UIColor:buttonOptions.disabledColor];
 		[disabledTextAttributes setObject:color forKey:NSForegroundColorAttributeName];
 	}
 	
-	NSNumber* fontSize = dictionary[@"fontSize"] ? dictionary[@"fontSize"] : @(17);
-	NSString* fontFamily = dictionary[@"fontFamily"];
-	if (fontFamily) {
-		[textAttributes setObject:[UIFont fontWithName:fontFamily size:[fontSize floatValue]] forKey:NSFontAttributeName];
+	NSNumber* fontSize = buttonOptions.fontSize ? buttonOptions.fontSize : @(17);
+	if (buttonOptions.fontFamily) {
+		[textAttributes setObject:[UIFont fontWithName:buttonOptions.fontFamily size:[buttonOptions.fontSize floatValue]] forKey:NSFontAttributeName];
 	} else{
 		[textAttributes setObject:[UIFont systemFontOfSize:[fontSize floatValue]] forKey:NSFontAttributeName];
 	}
@@ -121,10 +106,8 @@
 	[barButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
 	[barButtonItem setTitleTextAttributes:disabledTextAttributes forState:UIControlStateDisabled];
 	
-	NSString *testID = dictionary[@"testID"];
-	if (testID)
-	{
-		barButtonItem.accessibilityIdentifier = testID;
+	if (buttonOptions.testID) {
+		barButtonItem.accessibilityIdentifier = buttonOptions.testID;
 	}
 	
 	return barButtonItem;

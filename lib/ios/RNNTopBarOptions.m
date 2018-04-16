@@ -23,6 +23,8 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 
 - (void)mergeWith:(NSDictionary *)otherOptions {
 	[super mergeWith:otherOptions];
+	[self.leftButtons mergeWith:otherOptions[@"leftButtons"] defaultButtonOptions:self.button];
+	[self.rightButtons mergeWith:otherOptions[@"rightButtons"] defaultButtonOptions:self.button];
 	self.title.subtitle = self.subtitle;
 }
 
@@ -144,7 +146,7 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	
 	if (self.rightButtons || self.leftButtons) {
 		_navigationButtons = [[RNNNavigationButtons alloc] initWithViewController:(RNNRootViewController*)viewController];
-		[_navigationButtons applyLeftButtons:self.leftButtons rightButtons:self.rightButtons];
+		[_navigationButtons applyLeftButtons:self.leftButtons.buttons rightButtons:self.rightButtons.buttons];
 	}
 	
 	UIImage *image = self.backButtonImage ? [RCTConvert UIImage:self.backButtonImage] : nil;
