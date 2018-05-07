@@ -215,6 +215,7 @@ function convertStyleParams(originalStyleObject) {
     topTabsScrollable: originalStyleObject.topTabsScrollable,
     topTabsHeight: originalStyleObject.topTabsHeight,
     screenBackgroundColor: processColor(originalStyleObject.screenBackgroundColor),
+    rootBackgroundImageName: originalStyleObject.rootBackgroundImageName,
 
     drawScreenAboveBottomTabs: !originalStyleObject.drawUnderTabBar,
 
@@ -224,6 +225,7 @@ function convertStyleParams(originalStyleObject) {
     bottomTabsSelectedButtonColor: processColor(originalStyleObject.tabBarSelectedButtonColor),
     bottomTabsHidden: originalStyleObject.tabBarHidden,
     bottomTabsHiddenOnScroll: originalStyleObject.bottomTabsHiddenOnScroll,
+    bottomTabsHideShadow: originalStyleObject.tabBarHideShadow,
     forceTitlesDisplay: originalStyleObject.forceTitlesDisplay,
     bottomTabBadgeTextColor: processColor(originalStyleObject.bottomTabBadgeTextColor),
     bottomTabBadgeBackgroundColor: processColor(originalStyleObject.bottomTabBadgeBackgroundColor),
