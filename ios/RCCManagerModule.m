@@ -329,6 +329,10 @@ RCT_EXPORT_METHOD(
                                                 error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantCreateControllerErrorCode description:@"could not create controller"]];
         return;
     }
+
+    if (@available(iOS 13.0, *)) {
+        [controller setModalPresentationStyle: UIModalPresentationFullScreen];
+    }
     
     if (layout[@"props"] && [layout[@"props"] isKindOfClass:[NSDictionary class]] && layout[@"props"][@"style"] && [layout[@"props"][@"style"] isKindOfClass: [NSDictionary class]]) {
         
