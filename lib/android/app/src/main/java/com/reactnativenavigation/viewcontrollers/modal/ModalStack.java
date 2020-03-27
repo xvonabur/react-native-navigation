@@ -64,7 +64,7 @@ public class ModalStack {
             CommandListenerAdapter onDismiss = new CommandListenerAdapter(listener) {
                 @Override
                 public void onSuccess(String childId) {
-                    eventEmitter.emitModalDismissed(componentId, 1);
+                    eventEmitter.emitModalDismissed(componentId, toDismiss.getCurrentComponentName(), 1);
                     super.onSuccess(componentId);
                 }
             };
@@ -84,11 +84,10 @@ public class ModalStack {
 
     public void dismissAllModals(ViewController root, Options mergeOptions, CommandListener listener) {
         if (modals.isEmpty()) {
-            listener.onError("Nothing to dismiss");
             return;
         }
-
         String topModalId = peek().getId();
+        String topModalName = peek().getCurrentComponentName();
         int modalsDismissed = size();
 
         peek().mergeOptions(mergeOptions);
@@ -98,7 +97,7 @@ public class ModalStack {
                 dismissModal(modals.get(0).getId(), root, new CommandListenerAdapter(listener) {
                     @Override
                     public void onSuccess(String childId) {
-                        eventEmitter.emitModalDismissed(topModalId, modalsDismissed);
+                        eventEmitter.emitModalDismissed(topModalId, topModalName, modalsDismissed);
                         super.onSuccess(childId);
                     }
                 });
