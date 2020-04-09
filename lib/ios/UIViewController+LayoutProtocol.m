@@ -20,6 +20,7 @@
     self.eventEmitter = eventEmitter;
     self.presenter = presenter;
     [self.presenter bindViewController:self];
+    self.extendedLayoutIncludesOpaqueBars = YES;
     if ([self respondsToSelector:@selector(setViewControllers:)]) {
         [self performSelector:@selector(setViewControllers:) withObject:childViewControllers];
     }
@@ -51,19 +52,6 @@
 	[self.options overrideOptions:options];
 }
 
-- (BOOL)extendedLayoutIncludesOpaqueBars {
-    return YES;
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-	UIInterfaceOrientationMask interfaceOrientationMask = self.presenter ? [self.presenter getOrientation:[self resolveOptions]] : [[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:[[UIApplication sharedApplication] keyWindow]];
-	return interfaceOrientationMask;
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return [self.presenter isStatusBarVisibility:self.navigationController resolvedOptions:self.resolveOptions];
-}
-
 - (UINavigationController *)stack {
     if ([self isKindOfClass:UINavigationController.class]) {
         return (UINavigationController *)self;
@@ -77,13 +65,13 @@
         [self readyForPresentation];
     }
     
-    [self.presentedComponentViewController setReactViewReadyCallback:^{
+    [self.getCurrentChild setReactViewReadyCallback:^{
         [self.presenter renderComponents:self.resolveOptionsWithDefault perform:^{
             [self readyForPresentation];
         }];
     }];
     
-    [self.presentedComponentViewController render];
+    [self.getCurrentChild render];
 }
 
 - (void)readyForPresentation {
@@ -163,13 +151,6 @@
 - (void)componentDidDisappear {
     [self.presenter componentDidDisappear];
     [self.parentViewController componentDidDisappear];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-	if (parent) {
-		[self.presenter applyOptionsOnWillMoveToParentViewController:self.resolveOptions];
-        [self onChildAddToParent:self options:self.resolveOptions];
-	}
 }
 
 #pragma mark getters and setters to associated object

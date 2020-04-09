@@ -38,8 +38,9 @@
 
 - (void)mergeChildOptions:(RNNNavigationOptions *)options child:(UIViewController *)child {
     [super mergeChildOptions:options child:child];
-    [_bottomTabPresenter mergeOptions:options resolvedOptions:self.resolveOptions child:[self findViewController:child]];
-    [_dotIndicatorPresenter mergeOptions:options resolvedOptions:self.resolveOptions child:[self findViewController:child]];
+    UIViewController* childViewController = [self findViewController:child];
+    [_bottomTabPresenter mergeOptions:options resolvedOptions:childViewController.resolveOptions child:childViewController];
+    [_dotIndicatorPresenter mergeOptions:options resolvedOptions:childViewController.resolveOptions child:childViewController];
 }
 
 - (id<UITabBarControllerDelegate>)delegate {
@@ -86,10 +87,6 @@
 	[super setSelectedIndex:selectedIndex];
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-	return [[self presenter] getStatusBarStyle:self.resolveOptions];
-}
-
 #pragma mark UITabBarControllerDelegate
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
@@ -115,5 +112,24 @@
 
     return NO;
 }
+
+# pragma mark - UIViewController overrides
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    [self.presenter willMoveToParentViewController:parent];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [self.presenter getStatusBarStyle];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return [self.presenter getStatusBarVisibility];
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return [self.presenter getOrientation];
+}
+
 
 @end

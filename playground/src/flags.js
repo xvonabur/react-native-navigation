@@ -1,5 +1,6 @@
 module.exports = {
   showTextInputToTestKeyboardInteraction: false,
-  useSlowOpenScreenAnimations: true,
-  useSlideAnimation: true
+  useCustomAnimations: false,
+  useSlowOpenScreenAnimations: false,
+  useSlideAnimation: false
 };

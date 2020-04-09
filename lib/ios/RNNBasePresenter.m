@@ -4,7 +4,6 @@
 #import "RNNReactComponentRegistry.h"
 #import "UIViewController+LayoutProtocol.h"
 #import "DotIndicatorOptions.h"
-#import "RCTConvert+Modal.h"
 
 @implementation RNNBasePresenter
 
@@ -37,11 +36,16 @@
     
 }
 
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    if (parent) {
+        [self applyOptionsOnWillMoveToParentViewController:self.boundViewController.resolveOptions];
+        [self.boundViewController onChildAddToParent:self.boundViewController options:self.boundViewController.resolveOptions];
+    }
+}
+
 - (void)applyOptionsOnInit:(RNNNavigationOptions *)initialOptions {
     UIViewController* viewController = self.boundViewController;
     RNNNavigationOptions *withDefault = [initialOptions withDefault:[self defaultOptions]];
-    [viewController setModalPresentationStyle:[RCTConvert UIModalPresentationStyle:[withDefault.modalPresentationStyle getWithDefaultValue:@"default"]]];
-    [viewController setModalTransitionStyle:[RCTConvert UIModalTransitionStyle:[withDefault.modalTransitionStyle getWithDefaultValue:@"coverVertical"]]];
     
     if (@available(iOS 13.0, *)) {
         viewController.modalInPresentation = ![withDefault.modal.swipeToDismiss getWithDefaultValue:YES];
@@ -81,8 +85,8 @@
 
 }
 
-- (UIStatusBarStyle)getStatusBarStyle:(RNNNavigationOptions *)resolvedOptions {
-    RNNNavigationOptions *withDefault = [resolvedOptions withDefault:[self defaultOptions]];
+- (UIStatusBarStyle)getStatusBarStyle {
+    RNNNavigationOptions *withDefault = [self.boundViewController.resolveOptions withDefault:[self defaultOptions]];
     NSString* statusBarStyle = [withDefault.statusBar.style getWithDefaultValue:@"default"];
     if ([statusBarStyle isEqualToString:@"light"]) {
         return UIStatusBarStyleLightContent;
@@ -101,16 +105,16 @@
     return self.boundViewController.getCurrentChild.navigationItem;
 }
 
-- (UIInterfaceOrientationMask)getOrientation:(RNNNavigationOptions *)options {
-    return [options withDefault:[self defaultOptions]].layout.supportedOrientations;
+- (UIInterfaceOrientationMask)getOrientation {
+    return [self.boundViewController.resolveOptions withDefault:self.defaultOptions].layout.supportedOrientations;
 }
 
-- (BOOL)isStatusBarVisibility:(UINavigationController *)stack resolvedOptions:(RNNNavigationOptions *)resolvedOptions {
-    RNNNavigationOptions *withDefault = [resolvedOptions withDefault:[self defaultOptions]];
+- (BOOL)getStatusBarVisibility {
+    RNNNavigationOptions *withDefault = [self.boundViewController.resolveOptions withDefault:self.defaultOptions];
     if (withDefault.statusBar.visible.hasValue) {
         return ![withDefault.statusBar.visible get];
     } else if ([withDefault.statusBar.hideWithTopBar getWithDefaultValue:NO]) {
-        return stack.isNavigationBarHidden;
+        return self.boundViewController.stack.isNavigationBarHidden;
     }
     return NO;
 }

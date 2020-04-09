@@ -150,9 +150,9 @@
 - (UIViewController *)createBottomTabs:(RNNLayoutNode*)node {
     RNNLayoutInfo* layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node];
     RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:node.data[@"options"]];
-    RNNBottomTabsPresenter* presenter = [BottomTabsPresenterCreator createWithDefaultOptions:_defaultOptions];
+    BottomTabsBasePresenter* presenter = [BottomTabsPresenterCreator createWithDefaultOptions:_defaultOptions];
     NSArray *childViewControllers = [self extractChildrenViewControllersFromNode:node];
-    BottomTabPresenter* bottomTabPresenter = [BottomTabPresenterCreator createWithDefaultOptions:_defaultOptions children:childViewControllers];;
+    BottomTabPresenter* bottomTabPresenter = [BottomTabPresenterCreator createWithDefaultOptions:_defaultOptions];
     RNNDotIndicatorPresenter* dotIndicatorPresenter = [[RNNDotIndicatorPresenter alloc] initWithDefaultOptions:_defaultOptions];
 	BottomTabsBaseAttacher* bottomTabsAttacher = [_bottomTabsAttachModeFactory fromOptions:options];
     

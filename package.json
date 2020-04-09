@@ -1,6 +1,6 @@
 {
   "name": "react-native-navigation",
-  "version": "6.1.0",
+  "version": "6.3.1",
   "description": "React Native Navigation - truly native navigation for iOS and Android",
   "license": "MIT",
   "nativePackage": true,
@@ -19,8 +19,8 @@
   "main": "lib/dist/index.js",
   "typings": "lib/dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf ./lib/dist && tsc",
-    "watch": "rm -rf ./lib/dist && tsc --watch",
+    "build": "node ./scripts/build",
+    "watch": "node ./scripts/watch",
     "xcode": "open playground/ios/playground.xcworkspace",
     "install-android": "node ./scripts/install-android",
     "uninstall-android": "cd playground/android && ./gradlew uninstallAll",

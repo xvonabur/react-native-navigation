@@ -1,4 +1,40 @@
 # Changelog
+# 6.3.0
+## Fixed
+### iOS
+* Fix symbol collision with react-native-keyboard-input [#8ad40e1](https://github.com/wix/react-native-navigation/commit/8ad40e1ab23116d432e888801c07b57c6c09ad37) by [yogevbd](https://github.com/yogevbd)
+* Fix overlays touch interception on new iPads [#2ed434c](https://github.com/wix/react-native-navigation/commit/2ed434c952b7c9326d9547005caa8c0601e58cb4)
+* Removes unable to find UIManager module warning [#ba12604](https://github.com/wix/react-native-navigation/commit/ba1260402cc15409ddfef46fd5cad180d5e1a60f)
+* Reject pop command when viewController not found in the hierarchy [#4413aa4](https://github.com/wix/react-native-navigation/commit/4413aa4a76628449116cf9bc7294696a490d6a65)
+* Fix mergeOptions merging options with wrong child [#3c38c50](https://github.com/wix/react-native-navigation/commit/3c38c50a8b53e958a21e6fb7453622463e9870ff)
+* Fix build warnings and possible retain cycles issues [#3f8577d](https://github.com/wix/react-native-navigation/commit/3f8577da7d23a2e4698d27d12bf9de55be39e7ef)
+* Fix bottomTab icon hidden after setting badge [#124f975](https://github.com/wix/react-native-navigation/commit/124f975f42ebaf124d9e7c58296eaafd0f617ad9) by [yogevbd](https://github.com/yogevbd)
+
+
+# 6.2.0
+## Added
+* Add windows support to build scripts vai `npm run start-windows` command [#afb5bff](https://github.com/wix/react-native-navigation/commit/afb5bffb49b9e8c670419aaacedf10f65cf82fd2) by [mayconmesquita](https://github.com/mayconmesquita)
+
+## Fixed
+### iOS
+* Fix largeTitle background color on iOS 13 no being applied [#979cb6e](https://github.com/wix/react-native-navigation/commit/979cb6e08f80bd0b6b8e9286eb21d3c255c88312) by [yogevbd](https://github.com/yogevbd)
+* Fix bottomTabs attach mode not working when BottomTabs are inside SideMenu [#7d6029f](https://github.com/wix/react-native-navigation/commit/7d6029f06bd3b4f4336d0d50a1621a5291e43fa7) by [yogevbd](https://github.com/yogevbd)
+* Fix crash on iOS 10 when displaying stack layouts [#e923b8c](https://github.com/wix/react-native-navigation/commit/e923b8c02204e31d1ce6781dab11ebeabc2af218) [RomualdPercereau](https://github.com/RomualdPercereau)
+
+# 6.1.2
+## Fixed
+### iOS
+* Fix modal presentation style not being applied on some layouts [#931167e](https://github.com/wix/react-native-navigation/commit/931167e039000502d4198244c450dacce3c39809) by [yogevbd](https://github.com/yogevbd)
+* Fix truncated bottomTab.text with semibold fontWeight [#b01629c](https://github.com/wix/react-native-navigation/commit/b01629c41da9197ee0737c937c02684c73dd9042) by [yogevbd](https://github.com/yogevbd)
+* Always drawBehind bottomTabs and topBar when translucent: true [#6edbbf5](https://github.com/wix/react-native-navigation/commit/6edbbf512f2230ee0bceaf73c7895bca90475700) by [yogevbd](https://github.com/yogevbd)
+* drawBehind when largeTitle is visible - fixes black large title [#6edbbf5](https://github.com/wix/react-native-navigation/commit/6edbbf512f2230ee0bceaf73c7895bca90475700) by [yogevbd](https://github.com/yogevbd)
+
+# 6.1.1
+## Fixed
+### iOS
+* Create new UITabBarItem instance on each bottomTab update [#3757ff7](https://github.com/wix/react-native-navigation/commit/3757ff7aa64cc9b6b8054af3e27b3865e27b2f9f) by [yogevbd](https://github.com/yogevbd)
+* Delete duplicate misplaced files in root directory [#6d61ec0](https://github.com/wix/react-native-navigation/commit/6d61ec0e6cabeddc41b5860b4cb5b24f3de92dc2) by [ItsNoHax](https://github.com/ItsNoHax)
+
 # 6.1.0
 ## Added
 * Add componentName to modalDismiss event [#1c2558d](https://github.com/wix/react-native-navigation/commit/1c2558d77e489e2a35adc3a60eebed97ebf52add) by [jinshin1013](https://github.com/jinshin1013)
@@ -15,7 +51,7 @@
 ### Android
 * Stop rejecting dismissAllModals promise if no modals are displayed [#30b0b47](https://github.com/wix/react-native-navigation/commit/30b0b47b712cd1882b9c944a125c9d06ca5e0dd8) by [guyca](https://github.com/guyca)
 * Support tabs without icons on Android [#ef58a6c](https://github.com/wix/react-native-navigation/commit/ef58a6cdeb1c4ea90ff528af50d6d2dc572f9f28) by [guyca](https://github.com/guyca)
-* Fix autolink script - set minSdk to 19 [#4ce0e89](https://github.com/wix/react-native-navigation/commit/4ce0e89b06b9ab29d4be5d2eb0d11419deaade7a) by [yogevbd](https://github.com/yogevbd)
+* Fix autolink script - set minSdk to 19 [#4ce0e89](https://github.com/wix/react-native-navigation/commit/4ce0e89b06b9ab29d4be5d2eb0d11419deaade7a) by [jinshin1013](https://github.com/jinshin1013)
 * ExternalComponentController extends ViewController [#c33ff12](https://github.com/wix/react-native-navigation/commit/c33ff1291ded4b171ef7b3f0736c5bc5b169d850) by [guyca](https://github.com/guyca)
 * Support [react-native-youtube](https://github.com/davidohayon669/react-native-youtube) [#2793a02](https://github.com/wix/react-native-navigation/commit/2793a022729043d271fa6ffd80df62297c5f76fa)
 
