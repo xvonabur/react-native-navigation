@@ -24,11 +24,14 @@ const setDefaultOptions = () => Navigation.setDefaultOptions({
     selectedTextColor: Colors.primary
   },
   animations: {
-    ...useSlideAnimation ?
-        slideAnimations :
-        useCustomAnimations ?
-          customAnimations :
-          {}
+    setRoot: {
+      waitForRender: true,
+      alpha: {
+        from: 0,
+        to: 1,
+        duration: 300
+      }
+    }
   },
   modalPresentationStyle: 'fullScreen'
 });
